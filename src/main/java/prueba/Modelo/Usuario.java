@@ -1,9 +1,5 @@
 package prueba.Modelo;
 
-import lombok.Data;
-
-import lombok.NoArgsConstructor;
-
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +16,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -32,8 +30,8 @@ import lombok.Setter;
 public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "usuario_id")
-	private long id;
+	@Column(name = "usuario_Id")
+	long usuario_Id;
 	
 	@JsonProperty("password")
 	@NotNull
@@ -45,7 +43,7 @@ public class Usuario {
 	private String name;
 	
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "usuario_id")
+	@JoinColumn(name = "usuario_Id")
 	@JsonProperty("phones")
 	@NotNull
 	private List<Phones> phones;

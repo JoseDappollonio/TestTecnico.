@@ -31,7 +31,7 @@ class UsuarioServiceTest {
 		Usuario entity = new Usuario();
 		entity.setEmail("grey23@gmail.com");
 		entity.setName("nicolas");
-		entity.setId(1);
+		entity.setUsuario_Id(1);
 		entity.setIsactive(true);
 		when(userRepository.findByemail("grey23@gmail.com")).thenReturn(entity);
 

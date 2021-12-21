@@ -1,12 +1,10 @@
 package prueba.Modelo;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
@@ -27,24 +25,23 @@ public class Phones {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@NotNull
-	private long id;
-	
+	private long phone_Id;
+
 	@JsonProperty("number")
 	@NotNull
 	private Integer number;
-	
+
 	@JsonProperty("contrycode")
 	@NotNull
 	private Integer contrycode;
-	
+
 	@JsonProperty("citycode")
 	@NotNull
 	private Integer citycode;
+
 	
-	@ManyToOne(cascade = CascadeType.ALL)
 	@NotNull
 	@JoinColumn(name = "usuario_id")
-	private Usuario usuario;
-	
+	private Long usuario_Id;
 
 }

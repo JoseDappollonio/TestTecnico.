@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 import prueba.Modelo.Phones;
 import prueba.Modelo.Usuario;
-import prueba.Repository.PhonesRepository;
 import prueba.Repository.UsuarioRepository;
 import prueba.utils.utils;
 
@@ -21,8 +20,6 @@ public class UsuarioService {
 	@Autowired
 	UsuarioRepository usuario;
 
-	@Autowired
-	PhonesRepository phones;
 
 	// Select Inicial
 	public HashMap<String, String> Select(Usuario user) {
@@ -68,20 +65,23 @@ public class UsuarioService {
 	public HashMap<String, String> insert(Usuario user) {
 		HashMap<String, String> respuesta = new HashMap<>();
 		try {
-			user.setFechaIngreso(utl.fechadeldia());
-			user.setFechaModificacion(utl.fechadeldia());
-			user.setUltimaConexion(utl.fechadeldia());
-			user.setIsactive(true);
-			usuario.save(user);
 
-			List<Phones> data;
-			data = user.getPhones();
-
-			phones.saveAll(data);
+			List<Phones> data= user.getPhones();
+			Usuario usuario1 = new Usuario();
+			usuario1.setFechaIngreso(utl.fechadeldia());
+			usuario1.setFechaModificacion(utl.fechadeldia());
+			usuario1.setUltimaConexion(utl.fechadeldia());
+			usuario1.setIsactive(true);
+			usuario1.setName(user.getName());			
+			usuario1.setEmail(user.getEmail());
+			usuario1.setPassword(user.getPassword());			
+			usuario1.setPhones(data);
+			usuario.save(usuario1);
+			
 
 			Usuario response = usuario.findByemail(user.getEmail());
 			respuesta.put("usuario", response.getEmail());
-			respuesta.put("id", "" + response.getId());
+			respuesta.put("id", "" + response.getUsuario_Id());
 			respuesta.put("created", "" + response.getFechaIngreso());
 			respuesta.put("modified", "" + response.getFechaModificacion());
 			respuesta.put("last_login", "" + response.getUltimaConexion());
@@ -95,7 +95,38 @@ public class UsuarioService {
 		}
 
 	}
+	
+	public List<Usuario> selectAll() {	
+		List <Usuario> response =usuario.findAll();			
+		return response;
+	}
+	
+	public Object SelectForEmail(Usuario user) {
+		HashMap<String, String> response = new HashMap<>();
+		try {
+			if (user.getEmail() == null || user.getEmail() == "") {
+				response.put("Mensaje", "Ingrese Mail para la busqueda");
+				return response;
+			} else {
+				Usuario rpta = usuario.findByemail(user.getEmail());
+				if (rpta.getEmail() == null) {
+					response.put("Mensaje", "No existe Mail en DB");
+					return response;
+				} else {
+					return rpta;
+				}
+				
+			}		
+		} catch (Exception e) {
+			response.put("Mensaje", "No existe Mail en DB");
+			
+		}
+		return response;
+	}
+		
+		
+		
+	}
 
 
 
-}
