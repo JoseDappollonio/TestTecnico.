@@ -1,5 +1,5 @@
 # TestTecnico
- Git Creado para entrega de Git tecnico
+ Git Creado para entrega de Test tecnico
 
 
 # Para Iniciar el proyecto.
@@ -73,6 +73,31 @@ si el correo no existe se realiza la validacion de que la contraseña y el corre
 indicando que estos estan erroneos o no corresponden a los solicitados. si éstos ultimos son validos, se realizará el insert a la base de datos de Usuario y PHONES correspondiente a cada una. luego de realizado el insert se realizará una busqueda para rescatár los datos de la respuesta solicitada.
 
 Todo este flujo lo realiza de manera automatica.
+
+
+-------------------------------------------------------------------
+Se añade funcionalidad donde entrega todos los datos de los Usuarios inscritos en la base de datos
+
+El servicio puede ser consumido a travez del siguiente Curl el cual se puede importar en PostMan
+Curl:
+
+---------------------------------------------------------------------------------
+curl --location --request GET 'localhost:8080/traerDatos'
+
+---------------------------------------------------------------------------------
+
+Además se agrega una busqueda especifica para traer la informacion de un cliente donde a travez de un json con correo puede hacer consulta por usuarios especificos
+
+Se agrega el Curl:
+--------------------------------------------------------------------------------
+curl --location --request GET 'localhost:8080/traerDatosMail' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "juan@rodriguez.org"
+}'
+
+--------------------------------------------------------------------------------
+
 
 
 
